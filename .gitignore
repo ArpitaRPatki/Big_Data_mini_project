@@ -1,0 +1,46 @@
+# Python Virtual Environment
+.venv/
+venv/
+ENV/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Project Data Directories (Large datasets excluded from Git)
+data/raw/*
+!data/raw/.gitkeep
+data/parquet/*
+!data/parquet/.gitkeep
+data/output/*
+!data/output/.gitkeep
+
+# Execution Logs
+logs/*
+!logs/.gitkeep
+
+# Apache Spark & Hadoop Temporary / Checkpoint Files
+metastore_db/
+derby.log
+*.crc
+.spark-staging*
+spark-warehouse/
+winutils/
+hadoop/
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# IDE / Editor configuration
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS Generated Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
