@@ -45,6 +45,17 @@ def get_spark(app_name: str = "EcommerceAnalytics") -> SparkSession:
     SparkSession
         Configured active Spark session.
     """
+    # Point PySpark worker and driver to the active virtual environment Python interpreter
+    # This prevents Windows from defaulting to the Microsoft Store 'python' stub
+    os.environ["PYSPARK_PYTHON"] = sys.executable
+    os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
+
+    # Set SPARK_HOME directly to avoid Windows batch scripts failing on path spaces
+    import pyspark
+
+    if "SPARK_HOME" not in os.environ:
+        os.environ["SPARK_HOME"] = str(Path(pyspark.__file__).resolve().parent)
+
     # Fix for Windows native I/O if HADOOP_HOME is not globally registered
     # Checks local winutils directory if present
     project_root = Path(__file__).resolve().parent

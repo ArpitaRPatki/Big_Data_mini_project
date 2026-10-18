@@ -17,8 +17,25 @@ Viva Examination Notes:
    - Enables predicate pushdown (reading only required columns and filtering row groups before reading into memory).
 """
 
+import os
+import sys
 import time
 from pathlib import Path
+
+# Ensure Spark workers find the active virtual environment Python interpreter
+os.environ["PYSPARK_PYTHON"] = sys.executable
+os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
+
+# Set local Hadoop and Spark paths
+local_hadoop = Path(__file__).resolve().parent / "hadoop"
+if local_hadoop.exists() and "HADOOP_HOME" not in os.environ:
+    os.environ["HADOOP_HOME"] = str(local_hadoop)
+    os.environ["PATH"] = f"{local_hadoop / 'bin'};{os.environ.get('PATH', '')}"
+
+import pyspark
+if "SPARK_HOME" not in os.environ:
+    os.environ["SPARK_HOME"] = str(Path(pyspark.__file__).resolve().parent)
+
 from pyspark.sql import functions as F
 from spark_session import get_spark
 from config import PARQUET_DATA_DIR
